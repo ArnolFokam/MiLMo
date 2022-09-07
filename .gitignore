@@ -326,3 +326,4 @@ cython_debug/
 /usercache.json
 
 /whitelist.json
+/outputs/
