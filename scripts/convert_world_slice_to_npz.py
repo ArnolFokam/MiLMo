@@ -1,6 +1,4 @@
 import argparse
-from typing import List
-
 import numpy as np
 
 import grpc
@@ -18,11 +16,13 @@ parser.add_argument('-s', '--server',
 
 parser.add_argument('-c', '--center_position',
                     default=[0, 28, 0],
-                    type=List[int])
+                    nargs="*",
+                    type=int)
 
 parser.add_argument('-r', '--radius',
                     default=[28, 28, 28],
-                    type=List[int])
+                    nargs="*",
+                    type=int)
 
 parser.add_argument('-o', '--output_dir',
                     default='./outputs/worlds',
@@ -36,6 +36,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     assert all(x > 0 for x in args.radius), "Radius be positive"
+    assert len(args.radius) == 3, "only 3D coordinates are allowed for radius"
+    assert len(args.center_position) == 3, "only 3D coordinates are allowed for center"
     assert args.center_position[1] - args.radius[1] >= 0, "Underground not supported"
 
     # connect to server
