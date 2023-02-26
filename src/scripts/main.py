@@ -7,12 +7,8 @@ import os
 from tempfile import TemporaryDirectory
 import time
 from typing import Optional
-import numpy as np
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader
-from torchtext.datasets import WikiText2
-from torchtext.data.utils import get_tokenizer
 from torchtext.vocab import build_vocab_from_iterator
 
 
@@ -89,24 +85,25 @@ def evaluate(model: nn.Module,
         
             output = model(data, src_mask)
             output_flat = output.view(-1, num_tokens)
+            print(torch.argmax(output_flat, dim=-1), targets)
             total_loss += seq_len * criterion(output_flat, targets).item()
     return total_loss / (len(eval_data) - 1)
 
 
 if __name__ == "__main__":
     # optimatization parameters
-    epochs = 1
+    epochs = 20
 
     # data parameters
-    data_dir = "/home/arnol/research/milt/data/worlds/shmar"
+    data_dir = "/home/arnol/research/milt/data/worlds/s-bigger"
     train_batch_size = 128
     eval_batch_size = 128
 
     # model parameters
-    emsize = 200  # embedding dimension
-    d_hid = 200  # dimension of the feedforward network model in nn.TransformerEncoder
-    nlayers = 2  # number of nn.TransformerEncoderLayer in nn.TransformerEncoder
-    nhead = 2  # number of heads in nn.MultiheadAttention
+    emsize = 256  # embedding dimension
+    d_hid = 256  # dimension of the feedforward network model in nn.TransformerEncoder
+    nlayers = 4  # number of nn.TransformerEncoderLayer in nn.TransformerEncoder
+    nhead = 4  # number of heads in nn.MultiheadAttention
     dropout = 0.2  # dropout probability
 
     # device parameters
