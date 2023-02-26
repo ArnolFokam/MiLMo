@@ -7,14 +7,18 @@ import os
 from tempfile import TemporaryDirectory
 import time
 from typing import Optional
+import numpy as np
 import torch
 import torch.nn as nn
+from torch.utils.data import DataLoader
 from torchtext.datasets import WikiText2
 from torchtext.data.utils import get_tokenizer
 from torchtext.vocab import build_vocab_from_iterator
 
+
 from src.models.vanilla_transformer import generate_square_subsequent_mask, VanillaTransformer
 from src.utils.data import get_batch, bptt, preprocess_data, batchify
+from src.utils.datasets.minecraft import MinecraftDataset
 
 
 def train(model: nn.Module,
@@ -94,6 +98,7 @@ if __name__ == "__main__":
     epochs = 1
 
     # data parameters
+    data_dir = "/home/arnol/research/milt/data/worlds/shmar"
     train_batch_size = 128
     eval_batch_size = 128
 
@@ -111,24 +116,26 @@ if __name__ == "__main__":
     lr = 5.0  # learning rate
     
     # load and tokenize data
-    # TODO: minecraft like tokenization
-    train_iter = WikiText2(split='train')
-    tokenizer = get_tokenizer('basic_english')
-    vocab = build_vocab_from_iterator(map(tokenizer, train_iter),
-                                      specials=['<unk>'])
+    data = MinecraftDataset(data_dir)
+    vocab = build_vocab_from_iterator(data, specials=['<unk>'])
     vocab.set_default_index(vocab['<unk>'])
     num_tokens = len(vocab)  # size of vocabulary
 
     # load and split data
-    # TODO: Build dataset that takes thing from minecraft
-    train_iter, val_iter, test_iter = WikiText2()
-    train_data = preprocess_data(train_iter, vocab, tokenizer)
-    val_data = preprocess_data(val_iter, vocab, tokenizer)
-    test_data = preprocess_data(test_iter, vocab, tokenizer)
+    train_size = int(0.8 * len(data))
+    val_size = len(data) - train_size
+    train_data, val_data = torch.utils.data.random_split(data, [train_size, val_size])
+    
+    val_size = int(0.5 * len(val_data))
+    test_size = len(val_data) - val_size
+    val_data, test_data = torch.utils.data.random_split(val_data, [val_size, test_size])
+    
+    train_data = preprocess_data(train_data, vocab)
+    val_data = preprocess_data(val_data, vocab)
+    test_data = preprocess_data(test_data, vocab)
 
     # split data into batches
-    train_data = batchify(train_data,
-                          train_batch_size)  # shape [seq_len, batch_size]
+    train_data = batchify(train_data, train_batch_size)  # shape [seq_len, batch_size]
     val_data = batchify(val_data, eval_batch_size)
     test_data = batchify(test_data, eval_batch_size)
 

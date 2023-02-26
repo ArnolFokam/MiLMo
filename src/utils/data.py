@@ -12,9 +12,9 @@ import torchtext
 bptt = 35
 
 # TODO: code minecraft supported tokenization
-def preprocess_data(raw_text_iter: dataset.IterableDataset, vocab: torchtext.vocab.Vocab, tokenizer: Any) -> Tensor:
+def preprocess_data(raw_text_iter: dataset.IterableDataset, vocab: torchtext.vocab.Vocab) -> Tensor:
     """Converts raw text into a flat Tensor."""
-    data = [torch.tensor(vocab(tokenizer(item)), dtype=torch.long) for item in raw_text_iter]
+    data = [torch.tensor(vocab(item), dtype=torch.long) for item in raw_text_iter]
     return torch.cat(tuple(filter(lambda t: t.numel() > 0, data)))
 
 def batchify(data: Tensor, bsz: int, device: Optional[str] = "cpu") -> Tensor:
@@ -47,3 +47,4 @@ def get_batch(source: torch.Tensor, i: int) -> Tuple[torch.Tensor, torch.Tensor]
     data = source[i:i+seq_len]
     target = source[i+1:i+1+seq_len].reshape(-1)
     return data, target
+
