@@ -30,7 +30,7 @@ class PositionalEncoding1D(nn.Module):
         x = x + self.pe[:x.size(0)]
         return self.dropout(x)
 
-class TransformerModel(nn.Module):
+class VanillaTransformer(nn.Module):
 
     def __init__(self, ntoken: int, d_model: int, nhead: int, d_hid: int,
                  nlayers: int, dropout: float = 0.5):
