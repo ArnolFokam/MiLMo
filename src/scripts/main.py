@@ -78,6 +78,11 @@ def evaluate(model: nn.Module,
             seq_len = data.size(0)
             if seq_len != bptt:
                 src_mask = src_mask[:seq_len, :seq_len]
+                
+            # move data to device
+            data = data.to(device)
+            targets = targets.to(device)
+        
             output = model(data, src_mask)
             output_flat = output.view(-1, num_tokens)
             total_loss += seq_len * criterion(output_flat, targets).item()
@@ -86,11 +91,11 @@ def evaluate(model: nn.Module,
 
 if __name__ == "__main__":
     # optimatization parameters
-    epochs = 3
+    epochs = 1
 
     # data parameters
-    train_batch_size = 20
-    eval_batch_size = 10
+    train_batch_size = 128
+    eval_batch_size = 128
 
     # model parameters
     emsize = 200  # embedding dimension
@@ -135,6 +140,9 @@ if __name__ == "__main__":
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=lr)
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, 1.0, gamma=0.95)
+    
+    # start training
+    best_val_loss = float('inf')
 
     with TemporaryDirectory() as tempdir:
         best_model_params_path = os.path.join(tempdir, "best_model_params.pt")
@@ -163,14 +171,14 @@ if __name__ == "__main__":
         model.load_state_dict(
             torch.load(best_model_params_path))  # load best model states
 
-    # test_loss = evaluate(
-    #             model,
-    #             test_data,
-    #             num_tokens,
-    #             criterion,
-    #             device)
-    # test_ppl = math.exp(test_loss)
-    # print('=' * 89)
-    # print(f'| End of training | test loss {test_loss:5.2f} | '
-    #       f'test ppl {test_ppl:8.2f}')
-    # print('=' * 89)
+    test_loss = evaluate(
+                model,
+                test_data,
+                num_tokens,
+                criterion,
+                device)
+    test_ppl = math.exp(test_loss)
+    print('=' * 89)
+    print(f'| End of training | test loss {test_loss:5.2f} | '
+          f'test ppl {test_ppl:8.2f}')
+    print('=' * 89)
