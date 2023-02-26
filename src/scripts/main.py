@@ -1,3 +1,7 @@
+"""
+credits: https://pytorch.org/tutorials/beginner/transformer_tutorial.html
+"""
+
 import math
 import os
 from tempfile import TemporaryDirectory
