@@ -95,15 +95,15 @@ if __name__ == "__main__":
     epochs = 20
 
     # data parameters
-    data_dir = "/home/arnol/research/milt/data/worlds/shmar"
-    train_batch_size = 128
-    eval_batch_size = 128
+    data_dir = "/home/manuel/milt/data/worlds/shmar"
+    train_batch_size = 256
+    eval_batch_size = 256
 
     # model parameters
-    emsize = 256  # embedding dimension
-    d_hid = 256  # dimension of the feedforward network model in nn.TransformerEncoder
-    nlayers = 4  # number of nn.TransformerEncoderLayer in nn.TransformerEncoder
-    nhead = 4  # number of heads in nn.MultiheadAttention
+    emsize = 1024  # embedding dimension
+    d_hid = 1024  # dimension of the feedforward network model in nn.TransformerEncoder
+    nlayers = 6  # number of nn.TransformerEncoderLayer in nn.TransformerEncoder
+    nhead = 10  # number of heads in nn.MultiheadAttention
     dropout = 0.2  # dropout probability
 
     # device parameters

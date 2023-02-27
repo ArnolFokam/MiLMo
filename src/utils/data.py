@@ -9,7 +9,7 @@ from torch.utils.data import dataset
 import torchtext
 
 # TODO: make this configurable
-bptt = 128
+bptt = 256
 
 # TODO: code minecraft supported tokenization
 def preprocess_data(raw_text_iter: dataset.IterableDataset, vocab: torchtext.vocab.Vocab) -> Tensor:
