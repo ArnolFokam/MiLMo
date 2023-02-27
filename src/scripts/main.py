@@ -103,7 +103,7 @@ if __name__ == "__main__":
     emsize = 1024  # embedding dimension
     d_hid = 1024  # dimension of the feedforward network model in nn.TransformerEncoder
     nlayers = 6  # number of nn.TransformerEncoderLayer in nn.TransformerEncoder
-    nhead = 10  # number of heads in nn.MultiheadAttention
+    nhead = 16  # number of heads in nn.MultiheadAttention
     dropout = 0.2  # dropout probability
 
     # device parameters
