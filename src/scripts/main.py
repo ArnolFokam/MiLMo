@@ -95,7 +95,7 @@ if __name__ == "__main__":
     epochs = 20
 
     # data parameters
-    data_dir = "/home/arnol/research/milt/data/worlds/s-bigger"
+    data_dir = "/home/arnol/research/milt/data/worlds/shmar"
     train_batch_size = 128
     eval_batch_size = 128
 
