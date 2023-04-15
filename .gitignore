@@ -326,3 +326,4 @@ cython_debug/
 /whitelist.json
 /outputs/
 /data/
+crash-reports/
