@@ -1,0 +1,10 @@
+defaults:
+  - base
+  - _self_
+
+model_name: gpt
+num_layers: 5
+num_heads: 4
+d_model: 128
+d_feedforward: 2048
+dropout: 0.1

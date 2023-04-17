@@ -327,3 +327,5 @@ cython_debug/
 /outputs/
 /data/
 crash-reports/
+.vscode/
+results/

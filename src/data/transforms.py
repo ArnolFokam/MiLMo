@@ -25,9 +25,10 @@ class RandomCropPad:
         self.padding_token = padding_token
     
     def __call__(self, inputs) -> Any:
-        start = torch.randint(0, inputs.shape[0] - self.max_seq_len, (1,))
-        length = torch.randint(self.min_crop_len, self.max_seq_len, (1,))
-        paddings = torch.full((self.max_seq_len - length,), self.padding_token)
+        # note we add the +1 to the length for casuall language modelling
+        start = torch.randint(0, inputs.shape[0] - self.max_seq_len - 1, (1,))
+        length = torch.randint(self.min_crop_len, self.max_seq_len + 1, (1,))
+        paddings = torch.full((self.max_seq_len - length + 1,), self.padding_token)
         return torch.cat([paddings, inputs[start:start + length]])
     
 class ToVocabID:

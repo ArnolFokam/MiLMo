@@ -14,8 +14,9 @@ from src.data.transforms import Compose, RandomCropPad, ToVocabID
 PAD = '<pad>'
 EOB = '<EOS>'
 SOB = '<SOS>'
+UNK = '<UNK>'
 
-RESERVED_TOKENS=[PAD, EOB, SOB]
+RESERVED_TOKENS=[PAD, EOB, SOB, UNK]
 
 class test:
     data_dir='data/worlds/shmar'
@@ -57,6 +58,7 @@ class MinecraftDataModule1D:
         
         # build vocabularity
         self.vocab = build_vocab_from_iterator(self.dataset.blocks, specials=RESERVED_TOKENS, special_first=True)
+        self.vocab.set_default_index(self.vocab.lookup_indices([UNK])[0])
         
         # number of tokens
         self.num_tokens = len(self.vocab)
@@ -108,8 +110,8 @@ class MinecraftDataModule1D:
             num_workers=min(12, int(0.5 * os.cpu_count()))
         )
         return loader
+    
+    def test_dataloader(self):
+        return None
 
 
-datasets = {
-    "1d_text_blocks": MinecraftDataModule1D
-}
