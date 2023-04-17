@@ -34,13 +34,13 @@ class MinecraftLanguageModelling1D(Dataset):
         self.target_transform = target_transform
         
         # load all the blocks. we use character level tokenization
-        self.blocks = [np.load(block).flatten().astype('str') for block in glob.glob(os.path.join(root, "*.npy"))]
+        self.world = np.load(self.root).flatten().astype('str')
         
     def __len__(self):
-        return len(self.blocks)
+        return self.world.shape[0]
 
     def __getitem__(self, idx) -> Any:
-        blocks = self.blocks[idx]
+        blocks = self.world[idx].flatten().astype('str')
         
         # build the transform
         if self.transform:

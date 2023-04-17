@@ -329,3 +329,5 @@ cython_debug/
 crash-reports/
 .vscode/
 results/
+shmar/
+world/
