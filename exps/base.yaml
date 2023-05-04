@@ -7,7 +7,7 @@ experiment:
 
 # data
 dataset_name: 1d_text_blocks
-data_dir: data/worlds/shmar
+data_dir: data/worlds/shmar_-100_-49_16_90_92_137_LNRJWBQ9CE.npy
 batch_size: 128
 val_split: 0.1
 max_seq_len: 128

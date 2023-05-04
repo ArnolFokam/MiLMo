@@ -34,13 +34,14 @@ class MinecraftLanguageModelling1D(Dataset):
         self.target_transform = target_transform
         
         # load all the blocks. we use character level tokenization
-        self.world = np.load(self.root).flatten().astype('str')
+        self.world = np.load(self.root).astype('str')
+        self.world = self.world.reshape(self.world.shape[0], -1)
         
     def __len__(self):
         return self.world.shape[0]
 
     def __getitem__(self, idx) -> Any:
-        blocks = self.world[idx].flatten().astype('str')
+        blocks = self.world[idx]
         
         # build the transform
         if self.transform:
@@ -57,7 +58,7 @@ class MinecraftDataModule1D:
         self.dataset = MinecraftLanguageModelling1D(root=self.train_cfg.data_dir)
         
         # build vocabularity
-        self.vocab = build_vocab_from_iterator(self.dataset.blocks, specials=RESERVED_TOKENS, special_first=True)
+        self.vocab = build_vocab_from_iterator(self.dataset.world, specials=RESERVED_TOKENS, special_first=True)
         self.vocab.set_default_index(self.vocab.lookup_indices([UNK])[0])
         
         # number of tokens
