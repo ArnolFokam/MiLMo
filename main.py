@@ -35,8 +35,19 @@ def train(
     
     return trainer.fit_and_test(model=model, data=data)
 
-def generate(pretrained_model_path: str):
-    pass
+def generate(
+        train_cfg,
+        pretrained_model_path: str,
+    ):
+    # load the pretrained model
+    pretrained_model = torch.load(pretrained_model_path)
+    model = models[train_cfg.model_name](train_cfg, pretrained_model["vocab_len"])
+    model.load_state_dict(pretrained_model["model_state_dict"], strict=False)
+    
+    # TODO: get the generate function
+    # TODO: get the prefix for the generation function
+    # TODO: generate different number of samples with different (with different seeds)
+    # TODO: save the generated samples as numpys
 
 @hydra.main(version_base=None, config_path=None)
 def main(cfg) -> None:

@@ -115,6 +115,7 @@ class Trainer:
         # save model
         return save_pytorch_things(self.results_dir, {
             'model_state_dict': self.model.state_dict(),
+            'vocab_len': len(data.vocab),
             'cfg': self.train_cfg,
         })
     
