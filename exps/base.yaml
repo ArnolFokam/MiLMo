@@ -36,3 +36,9 @@ log_every_n_steps: 10
 # device
 seed: 1
 
+# generation
+generation:
+  generator: ""
+  num_generations: 10
+  num_blocks_per_generation: 100
+

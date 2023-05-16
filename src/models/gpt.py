@@ -7,19 +7,6 @@ from src.models.layers import DecoderLayer
 from src.models.positional_encoding import PositionalEncoding1D
 
 
-class Test:
-    ntoken = 20
-    d_model = 128
-    d_feedforward = 2048
-    nhead = 3
-    num_layers = 5
-    batch_size = 10
-    max_seq_len = 10
-    vocab_size=50
-    num_heads=16
-    dropout=0.1
-
-
 class GPT(nn.Module):
     def __init__(self, train_cfg, vocab_size: int):
         super().__init__()
@@ -71,10 +58,45 @@ class GPT(nn.Module):
                                    targets.contiguous().view(-1))
 
         return {"loss": loss, "logits": logits}
+    
+    def generate(self, prefix: Tensor):
+        
+        # get the next block prediction
+        logits = self(prefix[:, -self.train_cfg.max_seq_len:])["logits"]
+        
+        # focus only on the last token
+        logits = logits[:, -1, :]
+        
+        # apply softmac to get the probabilities
+        probs = F.softmax(logits, dim=-1)
+        
+        # sample the next token
+        next_block = torch.multinomial(probs, num_samples=1)
+        
+        # # append the sampled index to the running sequence
+        outputs = torch.cat([prefix, next_block], dim=-1)
+            
+        return outputs
+            
 
 
 if __name__ == "__main__":
+    class Test:
+        ntoken = 20
+        d_model = 128
+        d_feedforward = 2048
+        nhead = 3
+        num_layers = 5
+        batch_size = 10
+        max_seq_len = 10
+        vocab_size=50
+        num_heads=16
+        dropout=0.1
+        generated_num_blocks=5
+    
     model = GPT(Test, Test.vocab_size)
     inputs = torch.randint(0, Test.vocab_size, (Test.batch_size, Test.max_seq_len))
     targets = torch.randint(0, Test.vocab_size, (Test.batch_size, Test.max_seq_len))
-    print(model(inputs, targets))
+    # print(model(inputs, targets))
+    # print(inputs)
+    # print(model.generate(inputs))

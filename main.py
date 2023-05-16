@@ -11,7 +11,8 @@ from hydra.core.hydra_config import HydraConfig
 from src.models import models
 from src.data import datamodules
 from src.trainer import Trainer
-from src.helpers import get_dir, get_new_run_dir_params, has_valid_hydra_dir_params, initialize_logging
+from src.generators import generators
+from src.helpers import generate_random_string, get_dir, get_new_run_dir_params, has_valid_hydra_dir_params, initialize_logging
 
 def train(
     output_dir: str,
@@ -43,11 +44,18 @@ def generate(
     pretrained_model = torch.load(pretrained_model_path)
     model = models[train_cfg.model_name](train_cfg, pretrained_model["vocab_len"])
     model.load_state_dict(pretrained_model["model_state_dict"], strict=False)
+    prefix = datamodules[train_cfg.dataset_name].prefix
     
-    # TODO: get the generate function
-    # TODO: get the prefix for the generation function
-    # TODO: generate different number of samples with different (with different seeds)
-    # TODO: save the generated samples as numpys
+    for _ in range(train_cfg.generation.num_generations):
+        generator = generators[train_cfg.generation.generator_name](
+            train_cfg=train_cfg,
+            moddel=model
+        )
+        output = generator.generate(
+            prefix=prefix, 
+            num_blocks=train_cfg.generation.num_blocks_per_generation
+            )
+        np.save(os.path.join(train_cfg.output_dir, f"generated_{generate_random_string(5)}.npy"), output)
 
 @hydra.main(version_base=None, config_path=None)
 def main(cfg) -> None:
