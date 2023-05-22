@@ -15,10 +15,6 @@ parser.add_argument('-s', '--server',
                     default="localhost:5001",
                     type=str)
 
-parser.add_argument('-bs', '--block_size',
-                    default=6,
-                    type=int)
-
 parser.add_argument('-o', '--output_dir',
                     default='./data/worlds',
                     type=str)
@@ -28,15 +24,15 @@ parser.add_argument('-w', '--world',
                     type=str)
 
 parser.add_argument('-lx', '--limit_x',
-                    default=[-100, -49],
+                    default=[-98, -52],
                     type=list)
 
 parser.add_argument('-ly', '--limit_y',
-                    default=[16, 90],
+                    default=[15, 92],
                     type=list)
 
 parser.add_argument('-lz', '--limit_z',
-                    default=[92, 137],
+                    default=[94, 135],
                     type=list)
 
 

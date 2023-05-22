@@ -16,7 +16,7 @@ parser.add_argument('-s', '--server',
                     type=str)
 
 parser.add_argument('-start', '--start_position',
-                    default=[0, 28, 0],
+                    default=[0, 200, 0],
                     type=List[int])
 
 parser.add_argument('-n', '--npy_dir',
