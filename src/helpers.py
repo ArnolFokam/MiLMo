@@ -19,11 +19,11 @@ def time_activity(activity_name: str):
     Args:
         activity_name (str): string that describes the name of an activity. It can be arbitrary
     """
-    logging.info("[Timing] %s started.", activity_name)
+    logging.info("[Timing] %s started", activity_name)
     start = timeit.default_timer()
     yield
     duration = timeit.default_timer() - start
-    logging.info("[Timing] %s finished (Took %.2fs).", activity_name, duration)
+    logging.info("[Timing] %s finished (Took %.2fs)", activity_name, duration)
     
     
 def get_chunks(data: List[Any], chunck_num: int) -> Iterable[List[Any]]:

@@ -59,6 +59,7 @@ class GPT(nn.Module):
 
         return {"loss": loss, "logits": logits}
     
+    @torch.no_grad()
     def generate(self, prefix: Tensor):
         
         # get the next block prediction
@@ -73,7 +74,7 @@ class GPT(nn.Module):
         # sample the next token
         next_block = torch.multinomial(probs, num_samples=1)
         
-        # # append the sampled index to the running sequence
+        # append the sampled index to the running sequence
         outputs = torch.cat([prefix, next_block], dim=-1)
             
         return outputs

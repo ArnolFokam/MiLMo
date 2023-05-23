@@ -36,6 +36,7 @@ class MinecraftLanguageModelling1D(Dataset):
         # load all the blocks. we use character level tokenization
         self.world = np.load(self.root).astype('str')
         self.world = self.world.reshape(self.world.shape[0], -1)
+        self.shape = self.world.shape
         
     def __len__(self):
         return self.world.shape[0]
@@ -81,7 +82,7 @@ class MinecraftDataModule1D:
         dataset_train, _ = random_split(
             self.dataset,
             [data_len - val_len, val_len],
-            generator=torch.Generator().manual_seed(self.train_cfg.seed),
+            generator=torch.Generator().manual_seed(self.train_cfg.device.seed),
         )
         
         loader = DataLoader(
@@ -100,7 +101,7 @@ class MinecraftDataModule1D:
         _, dataset_val = random_split(
             self.dataset,
             [data_len - val_len, val_len],
-            generator=torch.Generator().manual_seed(self.train_cfg.seed),
+            generator=torch.Generator().manual_seed(self.train_cfg.device.seed),
         )
         
         loader = DataLoader(

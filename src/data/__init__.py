@@ -1,6 +1,6 @@
-from src.data.minecraft1dsequence import MinecraftDataModule1D
+from src.data.minecraft1d import MinecraftDataModule1D
 
 
 datamodules = {
-    "1d_text_blocks": MinecraftDataModule1D
+    "minecraft_1d": MinecraftDataModule1D
 }

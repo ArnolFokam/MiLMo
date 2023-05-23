@@ -1,3 +1,4 @@
+import logging
 import sys
 import os
 import torch
@@ -38,39 +39,43 @@ def train(
 
 def generate(
         train_cfg,
+        output_dir,
         pretrained_model_path: str,
     ):
+    
     # load the pretrained model
     pretrained_model = torch.load(pretrained_model_path)
     model = models[train_cfg.model_name](train_cfg, pretrained_model["vocab_len"])
     model.load_state_dict(pretrained_model["model_state_dict"], strict=False)
-    prefix = datamodules[train_cfg.dataset_name].prefix
     
-    for _ in range(train_cfg.generation.num_generations):
-        generator = generators[train_cfg.generation.generator_name](
-            train_cfg=train_cfg,
-            moddel=model
-        )
-        output = generator.generate(
-            prefix=prefix, 
-            num_blocks=train_cfg.generation.num_blocks_per_generation
-            )
-        np.save(os.path.join(train_cfg.output_dir, f"generated_{generate_random_string(5)}.npy"), output)
-
+    # get the data used during training
+    dataset = datamodules[train_cfg.dataset_name](train_cfg).dataset
+    
+    # load the generator
+    generator = generators[train_cfg.generation.generator_name](
+        train_cfg=train_cfg,
+        model=model
+    )
+    
+    # generate the blocks
+    generator.generate(dataset=dataset, output_dir=output_dir)
+        
+        
+        
 @hydra.main(version_base=None, config_path=None)
 def main(cfg) -> None:
     """Main script to pretrain/finetune SSL algorithms"""
     
     # ensure reprodcibility and speed up
     if torch.cuda.is_available():
-        torch.cuda.manual_seed_all(cfg.seed)
+        torch.cuda.manual_seed_all(cfg.device.seed)
         
     os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
     torch.use_deterministic_algorithms(True)
     torch.backends.cudnn.benchmark = True
-    torch.manual_seed(cfg.seed)
-    random.seed(cfg.seed)
-    np.random.seed(cfg.seed)
+    torch.manual_seed(cfg.device.seed)
+    random.seed(cfg.device.seed)
+    np.random.seed(cfg.device.seed)
     
     output_dir = HydraConfig.get().runtime.output_dir
     
@@ -81,15 +86,25 @@ def main(cfg) -> None:
     # save configuration as json
     with open(os.path.join(output_dir, 'config.yaml'), 'w') as f:
         OmegaConf.save(config=cfg, f=f.name)
+        
+    # pretrained model
+    pretrained_model_path = None
        
-    # do language modelling
-    pretrained_model_path = train(
-        output_dir=output_dir,
-        train_cfg=cfg,
-    )
+    if cfg.experiment.do_pretraining:
+        # do language modelling
+        pretrained_model_path = train(
+            output_dir=output_dir,
+            train_cfg=cfg,
+        )
     
-    # gerneate results
-    generate(pretrained_model_path)
+    if cfg.experiment.do_generation:
+        # generate results with pretrained model if exists
+        pretrained_model_path = cfg.generation.pretrained_model_path if pretrained_model_path is None else pretrained_model_path
+        generate(
+            train_cfg=cfg,
+            output_dir=output_dir,
+            pretrained_model_path=pretrained_model_path,
+        )
         
     # save the completion of state of the run
     open(os.path.join(output_dir, 'completed'), 'w').close()

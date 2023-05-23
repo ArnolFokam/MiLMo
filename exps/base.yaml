@@ -4,10 +4,12 @@ hydra:
 
 experiment:
   name: MILT Reaseach
+  do_pretraining: True
+  do_generation: True
 
 # data
-dataset_name: 1d_text_blocks
-data_dir: data/worlds/shmar_-100_-49_16_90_92_137_LNRJWBQ9CE.npy
+dataset_name: minecraft_1d
+data_dir: data/worlds/shmar_-98_-52_15_92_94_135_QUKXKV4N6P.npy
 batch_size: 128
 val_split: 0.1
 max_seq_len: 128
@@ -28,17 +30,19 @@ lr: 1e-3
 momentum: 0.9
 weight_decay: 1e-6
 warmup_start_lr: 1e-4
-max_epochs: 400
+max_epochs: 1
 
 # logging
 log_every_n_steps: 10
 
-# device
-seed: 1
-
 # generation
 generation:
-  generator: ""
-  num_generations: 10
-  num_blocks_per_generation: 100
+  pretrained_model_path: 
+  generator_name: "minecraft_1d"
+  num_generations: 4
+  # num_blocks_per_generation: 100
+
+# device
+device:
+  seed: 1
 
