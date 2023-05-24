@@ -35,9 +35,13 @@ max_epochs: 1
 # logging
 log_every_n_steps: 10
 
+# transform
+transform_name: training
+
 # generation
 generation:
-  pretrained_model_path: 
+  pretrained_model_path:
+  transform_name: generation
   generator_name: "minecraft_1d"
   num_generations: 4
   # num_blocks_per_generation: 100

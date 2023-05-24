@@ -17,43 +17,49 @@ from src.helpers import generate_random_string, get_dir, get_new_run_dir_params,
 
 def train(
     output_dir: str,
-    train_cfg,
+    cfg,
 ) -> str:
 
     # compute some variables
     save_dir = get_dir(output_dir)
 
     # setup the data
-    data = datamodules[train_cfg.dataset_name](train_cfg)
+    data = datamodules[cfg.dataset_name](
+        cfg, 
+        cfg.transform_name
+    )
     
     # initialize models with petrained weights if available
-    model = models[train_cfg.model_name](train_cfg, len(data.vocab))
+    model = models[cfg.model_name](cfg, len(data.vocab))
     
     # initialize trainer
     trainer = Trainer(
-        train_cfg,
+        cfg,
         results_dir=save_dir
     )
     
     return trainer.fit_and_test(model=model, data=data)
 
 def generate(
-        train_cfg,
+        cfg,
         output_dir,
         pretrained_model_path: str,
     ):
     
     # load the pretrained model
     pretrained_model = torch.load(pretrained_model_path)
-    model = models[train_cfg.model_name](train_cfg, pretrained_model["vocab_len"])
+    model = models[cfg.model_name](cfg, pretrained_model["vocab_len"])
     model.load_state_dict(pretrained_model["model_state_dict"], strict=False)
     
     # get the data used during training
-    dataset = datamodules[train_cfg.dataset_name](train_cfg).dataset
+    dataset = datamodules[cfg.dataset_name](
+        cfg,
+        cfg.generation.transform_name
+    ).dataset
     
     # load the generator
-    generator = generators[train_cfg.generation.generator_name](
-        train_cfg=train_cfg,
+    generator = generators[cfg.generation.generator_name](
+        cfg=cfg,
         model=model
     )
     
@@ -94,14 +100,14 @@ def main(cfg) -> None:
         # do language modelling
         pretrained_model_path = train(
             output_dir=output_dir,
-            train_cfg=cfg,
+            cfg=cfg,
         )
     
     if cfg.experiment.do_generation:
         # generate results with pretrained model if exists
         pretrained_model_path = cfg.generation.pretrained_model_path if pretrained_model_path is None else pretrained_model_path
         generate(
-            train_cfg=cfg,
+            cfg=cfg,
             output_dir=output_dir,
             pretrained_model_path=pretrained_model_path,
         )

@@ -16,14 +16,14 @@ class Mincraft1DGenerator(BaseGenerator):
         output_dir_generation = get_dir(os.path.join(output_dir, "generations"))
         
         logging.info(f"Generation started")
-        for _ in range(self.train_cfg.generation.num_generations):
+        for _ in range(self.cfg.generation.num_generations):
                 
             # generate random prefix and we should predict the rest
             sequence = random.choice(dataset).unsqueeze(0)
             prefix = sequence[:, :sequence.shape[1] // 2]
                 
-            # generate `num_blocks` blocks from the prompt
-            for _ in range(prefix.shape[1] // 2):
+            # generate the number of blocks remaining
+            for _ in range(sequence.shape[1] - prefix.shape[1]):
                 # get the next token while keeping the 
                 # same dimensions for easy concatenation
                 next_token = self.model.generate(prefix)[None, :, -1]
@@ -31,8 +31,8 @@ class Mincraft1DGenerator(BaseGenerator):
 
             # save the generated sequence
             assert sequence.shape == prefix.shape
-            sequence = sequence.reshape(sequence.shape[0], dataset.shape[1], dataset.shape[2])
-            prefix = prefix.reshape(prefix.shape[0], dataset.shape[1], dataset.shape[2])
+            sequence = sequence.reshape(sequence.shape[0], dataset.world_shape[1], dataset.world_shape[2])
+            prefix = prefix.reshape(prefix.shape[0], dataset.world_shape[1], dataset.world_shape[2])
             random_string = generate_random_string(5)
             
             # save the sampled sequence

@@ -8,41 +8,41 @@ from src.models.positional_encoding import PositionalEncoding1D
 
 
 class GPT(nn.Module):
-    def __init__(self, train_cfg, vocab_size: int):
+    def __init__(self, cfg, vocab_size: int):
         super().__init__()
         
-        if train_cfg.d_model % train_cfg.num_heads != 0:
-            raise RuntimeError(f"The hidden dimenision {train_cfg.d_model} must be divisible by the number of heads {train_cfg.num_heads}")
+        if cfg.d_model % cfg.num_heads != 0:
+            raise RuntimeError(f"The hidden dimenision {cfg.d_model} must be divisible by the number of heads {cfg.num_heads}")
 
-        self.train_cfg = train_cfg
+        self.cfg = cfg
         
         # tokens encoding
         self.token_embeddings = nn.Embedding(vocab_size,
-                                             self.train_cfg.d_model)
+                                             self.cfg.d_model)
         
         # positional encoding
         self.positional_encoder = PositionalEncoding1D(
-            d_model=self.train_cfg.d_model, 
-            max_seq_len=self.train_cfg.max_seq_len
+            d_model=self.cfg.d_model, 
+            max_seq_len=self.cfg.max_seq_len
         )
         
         # dropout
-        self.dropout = nn.Dropout(p=self.train_cfg.dropout)
+        self.dropout = nn.Dropout(p=self.cfg.dropout)
         
         # decoder layer of a transformer
         self.decoder = nn.Sequential(*[
             DecoderLayer(
-                d_model=self.train_cfg.d_model,
-                d_feedforward=self.train_cfg.d_feedforward,
-                max_seq_len=self.train_cfg.max_seq_len,
-                num_heads=self.train_cfg.num_heads,
-                dropout=self.train_cfg.dropout
+                d_model=self.cfg.d_model,
+                d_feedforward=self.cfg.d_feedforward,
+                max_seq_len=self.cfg.max_seq_len,
+                num_heads=self.cfg.num_heads,
+                dropout=self.cfg.dropout
             )
-            for _ in range(self.train_cfg.num_layers)
+            for _ in range(self.cfg.num_layers)
         ])
         
         # linear layer for classification
-        self.classifier = nn.Linear(self.train_cfg.d_model, vocab_size)
+        self.classifier = nn.Linear(self.cfg.d_model, vocab_size)
 
     def forward(self, inputs: Tensor, targets: Optional[Tensor] = None) -> Tensor:
         # transformer attention
@@ -63,7 +63,7 @@ class GPT(nn.Module):
     def generate(self, prefix: Tensor):
         
         # get the next block prediction
-        logits = self(prefix[:, -self.train_cfg.max_seq_len:])["logits"]
+        logits = self(prefix[:, -self.cfg.max_seq_len:])["logits"]
         
         # focus only on the last token
         logits = logits[:, -1, :]

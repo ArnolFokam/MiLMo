@@ -15,8 +15,8 @@ class Trainer:
     VALIDATION_PREFIX = "val"
     TESTING_PREFIX = "test"
     
-    def __init__(self, train_cfg, results_dir) -> None:
-        self.train_cfg = train_cfg
+    def __init__(self, cfg, results_dir) -> None:
+        self.cfg = cfg
         self.results_dir = results_dir
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         
@@ -51,9 +51,9 @@ class Trainer:
             self.model.eval()
             
             # optimizer configuration
-            self.optimizer = get_optimizer(self.model, self.train_cfg)
+            self.optimizer = get_optimizer(self.model, self.cfg)
             self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-            self.scheduler = get_lr_scheduler(self.optimizer, self.train_cfg)
+            self.scheduler = get_lr_scheduler(self.optimizer, self.cfg)
             
             if self.scheduler:
                 self.scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
@@ -68,8 +68,8 @@ class Trainer:
             self.model.eval()
             
             # optimizer and scheduler configuration
-            self.optimizer = get_optimizer(self.model, self.train_cfg)
-            self.scheduler = get_lr_scheduler(self.optimizer, self.train_cfg)
+            self.optimizer = get_optimizer(self.model, self.cfg)
+            self.scheduler = get_lr_scheduler(self.optimizer, self.cfg)
             
             self.current_epoch = 0
         self.global_step = max(0, self.current_epoch - 1) * len(self.train_dataloader)
@@ -82,13 +82,13 @@ class Trainer:
         self.setup(model, data)
         
         with time_activity("Training"):
-            for _ in range(self.current_epoch, self.train_cfg.max_epochs):
+            for _ in range(self.current_epoch, self.cfg.max_epochs):
                 
                 with time_activity("Epoch {}".format(self.current_epoch + 1)):
     
                     self.fit_epoch()
                     
-                    if self.current_epoch % self.train_cfg.save_every_n_epochs == 0:
+                    if self.current_epoch % self.cfg.save_every_n_epochs == 0:
                         torch.save({
                             'epoch': self.current_epoch,
                             'model_state_dict': self.model.state_dict(),
@@ -116,7 +116,7 @@ class Trainer:
         return save_pytorch_things(self.results_dir, {
             'model_state_dict': self.model.state_dict(),
             'vocab_len': len(data.vocab),
-            'cfg': self.train_cfg,
+            'cfg': self.cfg,
         })
     
     def fit_epoch(self):
@@ -140,10 +140,10 @@ class Trainer:
             self.current_loss = loss.item()
             
             # calculate running average of code
-            total_num += self.train_cfg.batch_size
-            total_loss += loss.item() * self.train_cfg.batch_size
+            total_num += self.cfg.batch_size
+            total_loss += loss.item() * self.cfg.batch_size
             
-            if self.global_step % self.train_cfg.log_every_n_steps == 0:
+            if self.global_step % self.cfg.log_every_n_steps == 0:
                 log(self.results_dir, {"train-loss": total_loss / total_num}, step=self.global_step)
                 
             # update the step

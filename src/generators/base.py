@@ -1,7 +1,7 @@
 class BaseGenerator:
-    def __init__(self, model, train_cfg) -> None:
+    def __init__(self, model, cfg) -> None:
         self.model = model
-        self.train_cfg = train_cfg
+        self.cfg = cfg
     
     def generate(self):
         raise NotImplementedError
