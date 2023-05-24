@@ -25,6 +25,7 @@ class Mincraft1DGenerator(BaseGenerator):
             # generate `num_blocks` blocks from the prompt
             for _ in range(prefix.shape[1] // 2):
                 predictions = self.model.generate(prefix)
+                print(predictions.shape, prefix.shape)
                 prefix = torch.cat([prefix, predictions], dim=1)
 
             # save the generated sequence
