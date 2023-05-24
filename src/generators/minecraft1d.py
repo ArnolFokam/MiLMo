@@ -24,11 +24,11 @@ class Mincraft1DGenerator(BaseGenerator):
                 
             # generate `num_blocks` blocks from the prompt
             for _ in range(prefix.shape[1] // 2):
-                predictions = self.model.generate(prefix)
-                print(predictions.shape, prefix.shape)
-                prefix = torch.cat([prefix, predictions], dim=1)
+                next_token = self.model.generate(prefix)[:, -1]
+                prefix = torch.cat([prefix, next_token], dim=1)
 
             # save the generated sequence
+            assert sequence.shape == prefix.shape
             sequence = sequence.reshape(sequence.shape[0], dataset.shape[1], dataset.shape[2])
             prefix = prefix.reshape(prefix.shape[0], dataset.shape[1], dataset.shape[2])
             random_string = generate_random_string(5)
