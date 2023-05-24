@@ -24,8 +24,9 @@ class Mincraft1DGenerator(BaseGenerator):
                 
             # generate `num_blocks` blocks from the prompt
             for _ in range(prefix.shape[1] // 2):
-                next_token = self.model.generate(prefix)
-                print(next_token, next_token[:, -1])
+                # get the next token while keeping the 
+                # same dimensions for easy concatenation
+                next_token = self.model.generate(prefix)[None, :, -1]
                 prefix = torch.cat([prefix, next_token], dim=1)
 
             # save the generated sequence
