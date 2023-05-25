@@ -30,7 +30,7 @@ lr: 1e-3
 momentum: 0.9
 weight_decay: 1e-6
 warmup_start_lr: 1e-4
-max_epochs: 1
+max_epochs: 5
 
 # logging
 log_every_n_steps: 10

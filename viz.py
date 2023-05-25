@@ -18,11 +18,13 @@ parser.add_argument('-s', '--server',
                     type=str)
 
 parser.add_argument('-c', '--center_position',
-                    default=[0, 200, 0],
+                    default=[0, 4, 0],
                     type=List[int])
 
-parser.add_argument('-s', '--saved_blocks_dir',
+parser.add_argument('-d', '--saved_blocks_dir',
                     type=str)
+
+# TODO: make air to remove everything
 
 def create_blocks(world_slice, x, y, z):
     blocks_list = []
@@ -82,7 +84,7 @@ if __name__ == "__main__":
         
         # generate the samples and generations
         samples_blocks = create_blocks(sample, sx, cy, sz)
-        generations_blocks = create_blocks(generation, sx, cy, sz)
+        generations_blocks = create_blocks(generation, gx, cy, gz)
         
         # update the coordinates
         j += 1

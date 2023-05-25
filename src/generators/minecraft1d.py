@@ -9,7 +9,7 @@ from src.helpers import generate_random_string, get_dir
 
 
 class Mincraft1DGenerator(BaseGenerator):
-    def generate(self, dataset, output_dir):
+    def generate(self, dataset, output_dir, vocab=None):
         
         # put the generations in a sub-folder
         output_dir_samples = get_dir(os.path.join(output_dir, "samples"))
@@ -31,14 +31,19 @@ class Mincraft1DGenerator(BaseGenerator):
 
             # save the generated sequence
             assert sequence.shape == prefix.shape
+            
+            # map vocabulary to blocks
+            # sequence = np.asarray([vocab.get_itos(seq.tolist()) for seq in sequence])
+            # prefix = np.asarray([vocab.get_itos(seq.tolist()) for seq in prefix])
+            
             sequence = sequence.reshape(sequence.shape[0], dataset.world_shape[1], dataset.world_shape[2])
             prefix = prefix.reshape(prefix.shape[0], dataset.world_shape[1], dataset.world_shape[2])
             random_string = generate_random_string(5)
             
             # save the sampled sequence
-            np.save(os.path.join(output_dir_samples, f"{random_string}.npy"), sequence.detach().cpu().numpy())
+            np.save(os.path.join(output_dir_samples, f"{random_string}.npy"), sequence)
             
             # save the generated sequences
-            np.save(os.path.join(output_dir_generation, f"{random_string}.npy"), prefix.detach().cpu().numpy())
+            np.save(os.path.join(output_dir_generation, f"{random_string}.npy"), prefix)
             
         logging.info("Generation complete")
