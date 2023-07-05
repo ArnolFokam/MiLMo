@@ -64,7 +64,7 @@ def generate(
     )
     
     # generate the blocks
-    generator.generate(dataset=dataset, output_dir=output_dir)
+    generator.generate(dataset=dataset, output_dir=output_dir, vocab=dataset.vocab)
         
         
         
