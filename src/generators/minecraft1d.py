@@ -40,7 +40,9 @@ class Mincraft1DGenerator(BaseGenerator):
             
             # change the tokens to a format that can be 
             # saved and loaded in the minecraft module
-            print(sequence[0])
+            # print(sequence[0])
+            for i in prefix[0]:
+                print(i)
             print(prefix[0])
             sequence = dataset.to_world_format(sequence)
             prefix = dataset.to_world_format(prefix)
