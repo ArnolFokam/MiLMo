@@ -43,5 +43,5 @@ class VocabIDToText:
         self.vocab = vocab
         
     def __call__(self, inputs) -> Any:
-        return self.lookup_tokens(inputs)
+        return self.vocab.lookup_tokens(inputs)
         
