@@ -40,8 +40,8 @@ class Mincraft1DGenerator(BaseGenerator):
             
             # change the tokens to a format that can be 
             # saved and loaded in the minecraft module
-            print(prefix)
-            print(prefix)
+            print(sequence[0])
+            print(prefix[0])
             sequence = dataset.to_world_format(sequence)
             prefix = dataset.to_world_format(prefix)
             random_string = generate_random_string(5)
