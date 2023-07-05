@@ -25,6 +25,7 @@ parser.add_argument('-d', '--saved_blocks_dir',
                     type=str)
 
 # TODO: make air to remove everything
+# TODO: check the data is mapped to correct vocab
 
 def create_blocks(world_slice, x, y, z):
     blocks_list = []
