@@ -60,7 +60,7 @@ class MinecraftDataModule1D:
         self.dataset = MinecraftLanguageModelling1D(root=self.cfg.data_dir)
         
         # build vocabularity
-        self.vocab = build_vocab_from_iterator(self.dataset.world, specials=RESERVED_TOKENS, special_first=True)
+        self.vocab = build_vocab_from_iterator(self.dataset.data, specials=RESERVED_TOKENS, special_first=True)
         self.vocab.set_default_index(self.vocab.lookup_indices([UNK])[0])
         
         # number of tokens
