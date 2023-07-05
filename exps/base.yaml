@@ -4,7 +4,7 @@ hydra:
 
 experiment:
   name: MILT Reaseach
-  do_pretraining: True
+  do_pretraining: False
   do_generation: True
 
 # data

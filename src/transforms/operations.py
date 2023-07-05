@@ -31,10 +31,17 @@ class RandomCropPad:
         paddings = torch.full((self.max_seq_len - length + 1,), self.padding_token)
         return torch.cat([paddings, inputs[start:start + length]])
     
-class ToVocabID:
+class TextToVocabID:
     def __init__(self, vocab: torchtext.vocab.Vocab) -> None:
         self.vocab = vocab
         
     def __call__(self, inputs) -> Any:
         return torch.tensor(self.vocab(list(inputs)))
+    
+class VocabIDToText:
+    def __init__(self, vocab: torchtext.vocab.Vocab) -> None:
+        self.vocab = vocab
+        
+    def __call__(self, inputs) -> Any:
+        return self.lookup_tokens(inputs)
         

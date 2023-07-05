@@ -6,10 +6,11 @@ import torch
 import numpy as np
 from src.generators.base import BaseGenerator
 from src.helpers import generate_random_string, get_dir
+from src.transforms.operations import VocabIDToText
 
 
 class Mincraft1DGenerator(BaseGenerator):
-    def generate(self, dataset, output_dir, vocab=None):
+    def generate(self, dataset, output_dir, vocab = None):
         
         # put the generations in a sub-folder
         output_dir_samples = get_dir(os.path.join(output_dir, "samples"))
@@ -35,6 +36,8 @@ class Mincraft1DGenerator(BaseGenerator):
             # map vocabulary to blocks
             # sequence = np.asarray([vocab.get_itos(seq.tolist()) for seq in sequence])
             # prefix = np.asarray([vocab.get_itos(seq.tolist()) for seq in prefix])
+            print(sequence)
+            print(VocabIDToText()(sequence))
             
             sequence = sequence.reshape(sequence.shape[0], dataset.world_shape[1], dataset.world_shape[2])
             prefix = prefix.reshape(prefix.shape[0], dataset.world_shape[1], dataset.world_shape[2])
