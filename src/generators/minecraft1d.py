@@ -36,8 +36,8 @@ class Mincraft1DGenerator(BaseGenerator):
             # map vocabulary to blocks
             # sequence = np.asarray([vocab.get_itos(seq.tolist()) for seq in sequence])
             # prefix = np.asarray([vocab.get_itos(seq.tolist()) for seq in prefix])
-            print(sequence)
-            print(VocabIDToText(vocab)(sequence))
+            print(sequence[0])
+            print(VocabIDToText(vocab)(sequence[0].tolist()))
             
             sequence = sequence.reshape(sequence.shape[0], dataset.world_shape[1], dataset.world_shape[2])
             prefix = prefix.reshape(prefix.shape[0], dataset.world_shape[1], dataset.world_shape[2])
