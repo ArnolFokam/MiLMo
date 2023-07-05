@@ -38,9 +38,14 @@ class Mincraft1DGenerator(BaseGenerator):
             sequence = np.asarray([to_tokens(seq.tolist()) for seq in sequence])
             prefix = np.asarray([to_tokens(seq.tolist()) for seq in prefix])
             
+            # change the tokens to a format that can be 
+            # saved and loaded in the minecraft module
+            print(np.unique(sequence))
             sequence = dataset.to_world_format(sequence)
             prefix = dataset.to_world_format(prefix)
             random_string = generate_random_string(5)
+            
+            
             
             # save the sampled sequence
             np.save(os.path.join(output_dir_samples, f"{random_string}.npy"), sequence)
