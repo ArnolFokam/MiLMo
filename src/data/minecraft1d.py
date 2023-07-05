@@ -31,6 +31,9 @@ class MinecraftLanguageModelling1D(Dataset):
         self.world_shape = world.shape
         self.data = self.to_text_format(world)
         
+        # map <EOS>, <UNK>, etc to this token
+        self.default_token = '5' # air
+        
     def __len__(self):
         return self.world_shape[0]
 
