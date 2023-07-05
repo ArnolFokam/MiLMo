@@ -38,12 +38,6 @@ class Mincraft1DGenerator(BaseGenerator):
             sequence = np.asarray([to_tokens(seq.tolist()) for seq in sequence])
             prefix = np.asarray([to_tokens(seq.tolist()) for seq in prefix])
             
-            # filter the sequence and prefix to replace <EOS>, <UNK> with default token
-            sequence = map(lambda seq : [
-                dataset.default_token  if token.startswith('<') and token.endswith('>') else token 
-                for token in seq
-            ], sequence)
-            
             # change the tokens to a format that can be 
             # saved and loaded in the minecraft module
             sequence = dataset.to_world_format(sequence)

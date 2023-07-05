@@ -47,6 +47,12 @@ class MinecraftLanguageModelling1D(Dataset):
         return blocks
     
     def to_world_format(self, inputs):
+        # filter the sequence and prefix to replace <EOS>, <UNK> with default token
+        inputs = list(map(lambda seq : [
+            self.default_token  if token.startswith('<') and token.endswith('>') else token 
+            for token in seq
+        ], inputs))
+            
         inputs = np.asarray(inputs).astype('int')
         return inputs.reshape(inputs.shape[0], self.world_shape[1], self.world_shape[2])
     
