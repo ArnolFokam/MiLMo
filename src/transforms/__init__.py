@@ -15,5 +15,8 @@ pipelines = lambda cfg, vocab: {
             max_seq_len=cfg.max_seq_len,
             padding_token=vocab.lookup_indices([PAD])[0]
         )
+    ]),
+    "generation": Compose([
+        TextToVocabID(vocab)
     ])
 }
