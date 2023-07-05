@@ -39,18 +39,16 @@ class Mincraft1DGenerator(BaseGenerator):
             prefix = np.asarray([to_tokens(seq.tolist()) for seq in prefix])
             
             # filter the sequence and prefix to replace <EOS>, <UNK> with default token
-            sequence = map(sequence, lambda seq : [
+            sequence = map(lambda seq : [
                 dataset.default_token  if token.startswith('<') and token.endswith('>') else token 
                 for token in seq
-            ])
+            ], sequence)
             
             # change the tokens to a format that can be 
             # saved and loaded in the minecraft module
             sequence = dataset.to_world_format(sequence)
             prefix = dataset.to_world_format(prefix)
             random_string = generate_random_string(5)
-            
-            
             
             # save the sampled sequence
             np.save(os.path.join(output_dir_samples, f"{random_string}.npy"), sequence)
