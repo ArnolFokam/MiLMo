@@ -52,10 +52,10 @@ def generate(
     model.load_state_dict(pretrained_model["model_state_dict"], strict=False)
     
     # get the data used during training
-    dataset = datamodules[cfg.dataset_name](
+    dm = datamodules[cfg.dataset_name](
         cfg,
         cfg.generation.transform_name
-    ).dataset
+    )
     
     # load the generator
     generator = generators[cfg.generation.generator_name](
@@ -64,7 +64,7 @@ def generate(
     )
     
     # generate the blocks
-    generator.generate(dataset=dataset, output_dir=output_dir, vocab=dataset.vocab)
+    generator.generate(dataset=dm.dataset, output_dir=output_dir, vocab=dm.vocab)
         
         
         
