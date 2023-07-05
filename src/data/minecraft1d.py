@@ -27,21 +27,29 @@ class MinecraftLanguageModelling1D(Dataset):
         self.transform = transform
         
         # load all the blocks. we use character level tokenization
-        self.world = np.load(self.root).astype('str')
-        self.world_shape = self.world.shape
-        self.world = self.world.reshape(self.world.shape[0], -1)
+        world = np.load(self.root)
+        self.world_shape = world.shape
+        self.data = self.to_text_format(world)
         
     def __len__(self):
-        return self.world.shape[0]
+        return self.world_shape[0]
 
     def __getitem__(self, idx) -> Any:
-        blocks = self.world[idx]
+        blocks = self.data[idx]
         
         # build the transform
         if self.transform:
             blocks = self.transform(blocks)
             
         return blocks
+    
+    def to_world_format(self, inputs):
+        inputs = np.asarray(inputs).astype('int')
+        return inputs.reshape(inputs.shape[0], self.world_shape[1], self.world_shape[2])
+    
+    def to_text_format(self, inputs):
+        inputs = np.asarray(inputs).astype('str')
+        return inputs.reshape(self.world_shape[0], -1)
     
 class MinecraftDataModule1D:
     

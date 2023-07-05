@@ -34,13 +34,12 @@ class Mincraft1DGenerator(BaseGenerator):
             assert sequence.shape == prefix.shape
             
             # map vocabulary to blocks
-            # sequence = np.asarray([vocab.get_itos(seq.tolist()) for seq in sequence])
-            # prefix = np.asarray([vocab.get_itos(seq.tolist()) for seq in prefix])
-            print(sequence[0])
-            print(VocabIDToText(vocab)(sequence[0].tolist()))
+            to_tokens = VocabIDToText(vocab)
+            sequence = np.asarray([to_tokens(seq.tolist()) for seq in sequence])
+            prefix = np.asarray([to_tokens(seq.tolist()) for seq in prefix])
             
-            sequence = sequence.reshape(sequence.shape[0], dataset.world_shape[1], dataset.world_shape[2])
-            prefix = prefix.reshape(prefix.shape[0], dataset.world_shape[1], dataset.world_shape[2])
+            sequence = dataset.to_world_format(sequence)
+            prefix = dataset.to_world_format(prefix)
             random_string = generate_random_string(5)
             
             # save the sampled sequence
