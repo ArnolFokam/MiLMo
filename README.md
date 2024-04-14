@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to MiLMo 👋</h1>
+<h1 align="center">Welcome to MiLMo ⛏️💎⛏💎🪨⛏</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="#" target="_blank">
@@ -17,11 +17,12 @@ repository also includes scripts for obtaining or generating data from Minecraft
 ### Pre-requisites
 
 - Python >= `3.8`
-- Minecraft >= `1.12.2`
+- Minecraft client >= `1.12.2`
+- Java 8 aka `1.8`
 
 The following steps assumed the repository is already cloned and you are on a terminal with a working python environment.
 
-### Install Requirements
+### Install Project Requirements
 
 - Install PyTorch from the steps outline [here](https://pytorch.org/get-started/locally/).
 - Install project requirements from the specified file.
@@ -29,6 +30,11 @@ The following steps assumed the repository is already cloned and you are on a te
 ```bash
 pip install -r requirements.txt
 ```
+
+### Run the Minecraft server and client
+
+More information can be found [here](https://github.com/real-itu/Evocraft-py#4-rendering-minecraft).
+
 
 ## Author
 
