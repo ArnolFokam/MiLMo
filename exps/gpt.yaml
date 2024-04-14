@@ -11,4 +11,4 @@ d_feedforward: 2048
 dropout: 0.1
 
 generation:
-  pretrained_model_path: '/home/arnol/research/milt/results/2023-07-05/10-09-10/5NW44XTOF9/model.pth'
+  pretrained_model_path: results/2024-04-14/18-58-05/YO3LZQI0CX/model.pth

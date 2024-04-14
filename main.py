@@ -13,7 +13,7 @@ from src.models import models
 from src.data import datamodules
 from src.trainer import Trainer
 from src.generators import generators
-from src.helpers import generate_random_string, get_dir, get_new_run_dir_params, has_valid_hydra_dir_params, initialize_logging
+from src.helpers import get_dir, get_new_run_dir_params, has_valid_hydra_dir_params, initialize_logging
 
 def train(
     output_dir: str,

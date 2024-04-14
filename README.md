@@ -9,8 +9,7 @@
   </a>
 </p>
 
-> This project demonstrates how to train a small GPT model on Minecraft maps encoded as 3D NumPy arrays. The 
-repository also includes scripts for obtaining or generating data from Minecraft maps while the game is running.
+> This project demonstrates how to train a small GPT model on Minecraft maps encoded as 3D NumPy arrays. The repository also includes scripts for obtaining or generating data from Minecraft maps while the game is running.
 
 ## Quickstart
 
@@ -20,11 +19,11 @@ repository also includes scripts for obtaining or generating data from Minecraft
 - Minecraft Launcher >= `1.12.2`
 - Java 8 aka `1.8`
 
-The following steps assumed the repository is already cloned and you are on a terminal with a working python environment.
+The following steps assume the repository is already cloned and you are on a terminal with a working Python environment.
 
 ### Install Project Requirements
 
-- Install PyTorch from the steps outline [here](https://pytorch.org/get-started/locally/).
+- Install PyTorch from the steps outlined [here](https://pytorch.org/get-started/locally/).
 - Install project requirements from the specified file.
 
 ```bash
@@ -39,10 +38,10 @@ More information can be found [here](https://github.com/real-itu/Evocraft-py#4-r
 
 ### Save a Minecraft map as Training Data
 
-- Download a minecraft map at [https://www.minecraftmaps.com/](https://www.minecraftmaps.com/). Make sure that it is compatible with the Minecraft version `1.12.2` (see available maps [here](https://www.minecraftmaps.com/1-12-2)).
+- Download a Minecraft map at [https://www.minecraftmaps.com/](https://www.minecraftmaps.com/). Ensure that it is compatible with Minecraft version `1.12.2` (see available maps [here](https://www.minecraftmaps.com/1-12-2)).
 
-- Extract the downloaded zip file and copy the **map folder** in the repository.
-- The map folder should have a structure similar to the following structure:
+- Extract the downloaded zip file and copy the **map folder** into the repository.
+- The map folder should have a structure similar to the following:
 
 ```bash
 ├── advancements
@@ -54,18 +53,73 @@ More information can be found [here](https://github.com/real-itu/Evocraft-py#4-r
 ├── stats
 ├── datapacks
 └── level.dat
-
 ```
 
-- Update the server configuration in the file `server.properties` by setting `level-name=NAME OF COPIED MAP FOLDER`
+- Update the server configuration in the file [server.properties](/server.properties) by setting `level-name` to the name of the folder containing the map.
 
+- Run the server with the following command:
+
+```bash
+java -jar spongevanilla-1.12.2-7.3.0.jar
+```
+
+This command runs the Minecraft server with the downloaded map.
+
+- Use the script [create_dataset.py](/create_dataset.py) to create the dataset. This script will:
+    - read the map from the running server
+    - convert a portion of the map into a `numpy.ndarray` and save it.
+
+- Running this script will save the extracted portion of the world at [data/worlds/](/data/worlds/) as an `npy` file containing a 3D volume of integers.
+
+### Train a GPT model on a saved map
+
+- Set `data_dir` in [exps/base.yaml](/exps/base.yaml) to the path of the saved map.
+- Ensure that `experiment.do_pretraining` is set to `True` while `experiment.do_generation` is set to `False`.
+- Then, run the following command:
+
+```bash
+python main.py --config-path=exps --config-name=gpt
+```
+
+This command will train and save the model at `results/XXXX-XX-XX/XX-XX-XX/model.pth`.
+
+### Generate Minecraft data with trained model
+
+- To generate maps with a training model at `results/XXXX-XX-XX/XX-XX-XX/model.pth`, you should:
+  - Set `experiment.do_generation` to `True` and `experiment.do_pretraining` to `False`.
+  - Set `generation.pretrained_model_path` to the path to the trained model.
+  - Run the following command:
+
+  ```bash
+  python main.py --config-path=exps --config-name=gpt
+  ```
+
+This command will generate two folders in `results/XXXX-XX-XX/XX-XX-XX/` named `generations` and `samples` where the former contains `npy` files of generations made by the model with some start tokens identical to `npy` files in `samples` which contains the actual true values.
+
+### Visualize a generated map
+
+- Update the server configuration in the file [server.properties](/server.properties) by setting `level-name` to `world`.
+
+- Run the server with the following command:
+
+```bash
+java -jar spongevanilla-1.12.2-7.3.0.jar
+```
+
+This command runs the Minecraft server on an empty map onto which we will place our generated blocks.
+
+- When the server is running, run the following:
+
+```bash
+python viz.py --saved_blocks_dir PATH TO GENERATED NPY FILE
+```
 
 ## Author
 
 👤 **Arnol Fokam**
 
 * Website: https://arnolfokam.github.io/
-* Twitter: [@ArnolFokam](https://twitter.com//ArnolFokam)
+* Twitter: [@ArnolFokam](https://twitter.com/ArnolFokam)
 * Github: [@ArnolFokam](https://github.com/ArnolFokam)
 * LinkedIn: [@arnolfokam](https://linkedin.com/in/arnolfokam)
 
@@ -74,4 +128,4 @@ More information can be found [here](https://github.com/real-itu/Evocraft-py#4-r
 Give a ⭐️ if this project helped you or you just like what is being built!
 
 ***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)
