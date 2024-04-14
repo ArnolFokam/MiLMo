@@ -13,7 +13,7 @@
 
 ## Quickstart
 
-### Pre-requisites
+### System Requirements
 
 - Python >= `3.8`
 - Minecraft Launcher >= `1.12.2`
