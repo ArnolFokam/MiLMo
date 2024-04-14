@@ -9,9 +9,13 @@
   </a>
 </p>
 
+[**Quickstart**](#quickstart)
+| [**Usage**](#usage)
+| [**Author**](#author)
+
 > This project demonstrates how to train a small GPT model on Minecraft maps encoded as 3D NumPy arrays. The repository also includes scripts for obtaining or generating data from Minecraft maps while the game is running.
 
-## Quickstart
+<h2 name="quickstart" id="quickstart">Quickstart</h2>
 
 ### System Requirements
 
@@ -34,7 +38,7 @@ pip install -r requirements.txt
 
 More information can be found [here](https://github.com/real-itu/Evocraft-py#4-rendering-minecraft).
 
-## Usage
+<h2 name="usage" id="usage">Usage</h2>
 
 ### Save a Minecraft map as Training Data
 
@@ -114,7 +118,7 @@ This command runs the Minecraft server on an empty map onto which we will place 
 python viz.py --saved_blocks_dir PATH TO GENERATED NPY FILE
 ```
 
-## Author
+<h2 name="author" id="author">Author</h2>
 
 👤 **Arnol Fokam**
 
@@ -122,10 +126,3 @@ python viz.py --saved_blocks_dir PATH TO GENERATED NPY FILE
 * Twitter: [@ArnolFokam](https://twitter.com/ArnolFokam)
 * Github: [@ArnolFokam](https://github.com/ArnolFokam)
 * LinkedIn: [@arnolfokam](https://linkedin.com/in/arnolfokam)
-
-## Show your support
-
-Give a ⭐️ if this project helped you or you just like what is being built!
-
-***
-This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)
