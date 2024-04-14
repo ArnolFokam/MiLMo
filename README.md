@@ -13,7 +13,7 @@
 | [**Usage**](#usage)
 | [**Author**](#author)
 
-> This project demonstrates how to train a small GPT model on Minecraft maps encoded as 3D NumPy arrays. The repository also includes scripts for obtaining or generating data from Minecraft maps while the game is running.
+> This project demonstrates how to train a small GPT model on Minecraft maps encoded as 3D NumPy arrays. The repository also includes scripts for obtaining or generating data from Minecraft maps while the Minecraft server is running.
 
 <h2 name="quickstart" id="quickstart">Quickstart</h2>
 
