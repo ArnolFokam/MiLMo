@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to MiLMo ⛏️💎⛏💎🪨⛏</h1>
+<h1 align="center">Welcome to MiLMo 🤖⛏️💎⛏💎🪨⛏</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="#" target="_blank">
@@ -17,7 +17,7 @@ repository also includes scripts for obtaining or generating data from Minecraft
 ### Pre-requisites
 
 - Python >= `3.8`
-- Minecraft client >= `1.12.2`
+- Minecraft Launcher >= `1.12.2`
 - Java 8 aka `1.8`
 
 The following steps assumed the repository is already cloned and you are on a terminal with a working python environment.
@@ -34,6 +34,30 @@ pip install -r requirements.txt
 ### Run the Minecraft server and client
 
 More information can be found [here](https://github.com/real-itu/Evocraft-py#4-rendering-minecraft).
+
+## Usage
+
+### Save a Minecraft map as Training Data
+
+- Download a minecraft map at [https://www.minecraftmaps.com/](https://www.minecraftmaps.com/). Make sure that it is compatible with the Minecraft version `1.12.2` (see available maps [here](https://www.minecraftmaps.com/1-12-2)).
+
+- Extract the downloaded zip file and copy the **map folder** in the repository.
+- The map folder should have a structure similar to the following structure:
+
+```bash
+├── advancements
+├── data 
+├── DIM1 
+├── DIM-1 
+├── playerdata
+├── region
+├── stats
+├── datapacks
+└── level.dat
+
+```
+
+- Update the server configuration in the file `server.properties` by setting `level-name=NAME OF COPIED MAP FOLDER`
 
 
 ## Author
