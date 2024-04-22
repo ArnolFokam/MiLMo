@@ -140,5 +140,4 @@ I do not accept contributions for now, but feel free to raise any issues you spo
 
 * Website: https://arnolfokam.github.io/
 * Twitter: [@ArnolFokam](https://twitter.com/ArnolFokam)
-* Github: [@ArnolFokam](https://github.com/ArnolFokam)
 * LinkedIn: [@arnolfokam](https://linkedin.com/in/arnolfokam)
