@@ -19,7 +19,7 @@
     <a href="#quickstart">Quickstart</a> |
     <a href="#usage">Usage</a> |
     <a href="#contributing">Contributing</a> |
-    <a href="#author">Author</a>
+    <a href="#author">Author's Info</a>
   </h3>
 </div>
 
