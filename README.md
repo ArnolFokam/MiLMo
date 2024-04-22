@@ -1,21 +1,22 @@
-<h1 align="center">Welcome to MiLMo 🤖⛏️💎⛏💎🪨⛏</h1>
+<h1 align="center">Welcome to MiLMo: <b>Mi</b>necraft <b>L</b>anguage <b>Mo</b>del 🤖⛏️💎⛏💎🪨⛏</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="#" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
-  <a href="https://twitter.com/ArnolFokam" target="_blank">
-    <img alt="Twitter: ArnolFokam" src="https://img.shields.io/twitter/follow/ArnolFokam.svg?style=social" />
-  </a>
 </p>
 
-[**Quickstart**](#quickstart)
+[**Overview**](#overview)
+| [**Quickstart**](#quickstart)
 | [**Usage**](#usage)
-| [**Author**](#author)
+| [**Contributing**](#contributing)
+| [**Author's Info**](#author)
 
-> This project demonstrates how to train a small GPT model on Minecraft maps encoded as 3D NumPy arrays. The repository also includes scripts for obtaining or generating data from Minecraft maps while the Minecraft server is running.
+<h2 name="overview" id="overview">Overview 🔍</h2>
 
-<h2 name="quickstart" id="quickstart">Quickstart</h2>
+MiLMo is a project that demonstrates the training of a small GPT model on Minecraft maps encoded as 3D NumPy arrays. The repository also includes scripts for obtaining or generating data from Minecraft maps while the Minecraft server is running.
+
+<h2 name="quickstart" id="quickstart">Quickstart 🚀</h2>
 
 ### System Requirements
 
@@ -38,7 +39,7 @@ pip install -r requirements.txt
 
 More information can be found [here](https://github.com/real-itu/Evocraft-py#4-rendering-minecraft).
 
-<h2 name="usage" id="usage">Usage</h2>
+<h2 name="usage" id="usage">Usage 🪛</h2>
 
 ### Save a Minecraft map as Training Data
 
@@ -115,12 +116,16 @@ This command runs the Minecraft server on an empty map onto which we will place 
 - When the server is running, run the following:
 
 ```bash
-python viz.py --saved_blocks_dir PATH TO GENERATED NPY FILE
+python viz.py --saved_blocks_dir <PATH_TO_GENERATED_NPY_FILE>
 ```
 
-<h2 name="author" id="author">Author</h2>
+Replace `<PATH_TO_GENERATED_NPY_FILE>` with the actual path to the generated `.npy` file.
 
-👤 **Arnol Fokam**
+<h2 name="contributing" id="contributing">Contributing 🤝</h2>
+
+I do not accept contributions for now, but feel free to raise any issues you spot with the source code.
+
+<h2 name="author" id="author">Author's Info 👨‍🎨</h2>
 
 * Website: https://arnolfokam.github.io/
 * Twitter: [@ArnolFokam](https://twitter.com/ArnolFokam)
