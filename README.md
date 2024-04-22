@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to MiLMo: <b>Mi</b>necraft <b>L</b>anguage <b>Mo</b>del 🤖⛏️💎⛏💎🪨⛏</h1>
+<h1 align="center">Welcome to MiLMo: <b>Mi</b>necraft <b>L</b>anguage <b>Mo</b>del <br>🤖⛏️💎⛏💎🪨⛏</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="#" target="_blank">
