@@ -1,16 +1,25 @@
-<h1 align="center">Welcome to MiLMo: <b>Mi</b>necraft <b>L</b>anguage <b>Mo</b>del <br>🤖⛏️💎⛏💎🪨⛏</h1>
-<p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+<h1 align="center">MiLMo 🤖⛏️💎⛏💎🪨⛏</h1>
+
+<h2 align="center">
+    <p><span style="color: #4dd672">Mi</span>necraft <span style="color: #4dd672">L</span>anguage <span style="color: #4dd672">Mo</span>del to generate complex minecraft structures</p>
+</h2>
+
+<div align="center">
   <a href="#" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
-</p>
+</div>
 
-[**Overview**](#overview)
-| [**Quickstart**](#quickstart)
-| [**Usage**](#usage)
-| [**Contributing**](#contributing)
-| [**Author's Info**](#author)
+<div align="center">
+    <h3>
+      <a href="#overview">Overview</a> |
+      <a href="#quickstart-">Quickstart</a> |
+      <a href="#usage-">Usage</a> |
+      <a href="#contributing-">Contributing</a> |
+      <a href="#author">author</a>
+    </h3>
+
+</div>
 
 <h2 name="overview" id="overview">Overview 🔍</h2>
 
