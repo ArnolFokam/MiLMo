@@ -1,44 +1,46 @@
-<h1 align="center">MiLMo 🤖⛏️💎⛏💎🪨⛏</h1>
+<h1 align="center">MiLMo ⛏️⛏🪨⛏</h1>
 
 <h2 align="center">
-    <p><span style="color: #4dd672">Mi</span>necraft <span style="color: #4dd672">L</span>anguage <span style="color: #4dd672">Mo</span>del to generate complex minecraft structures</p>
+  <p><span style="color: #4dd672">Mi</span>necraft <span style="color: #4dd672">L</span>anguage <span style="color: #4dd672">Mo</span>del to Generate Complex Minecraft Structures</p>
 </h2>
 
 <div align="center">
   <a href="#" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
+  <a href="">
+    <img src="https://img.shields.io/badge/python-3.8-blue" alt="Python version 3.8"/>
+  </a>
 </div>
 
 <div align="center">
-    <h3>
-      <a href="#overview">Overview</a> |
-      <a href="#quickstart-">Quickstart</a> |
-      <a href="#usage-">Usage</a> |
-      <a href="#contributing-">Contributing</a> |
-      <a href="#author">author</a>
-    </h3>
-
+  <h3>
+    <a href="#overview">Overview</a> |
+    <a href="#quickstart">Quickstart</a> |
+    <a href="#usage">Usage</a> |
+    <a href="#contributing">Contributing</a> |
+    <a href="#author">Author</a>
+  </h3>
 </div>
 
-<h2 name="overview" id="overview">Overview 🔍</h2>
+<h2 name="overview" id="overview">Overview </h2>
 
-MiLMo is a project that demonstrates the training of a small GPT model on Minecraft maps encoded as 3D NumPy arrays. The repository also includes scripts for obtaining or generating data from Minecraft maps while the Minecraft server is running.
+MiLMo is a project that demonstrates training a small GPT model on Minecraft maps encoded as 3D NumPy arrays. The repository also includes scripts for obtaining or generating data from Minecraft maps while the Minecraft server is running.
 
-<h2 name="quickstart" id="quickstart">Quickstart 🚀</h2>
+<h2 name="quickstart" id="quickstart">Quickstart </h2>
 
 ### System Requirements
 
-- Python >= `3.8`
-- Minecraft Launcher >= `1.12.2`
-- Java 8 aka `1.8`
+* Python >= `3.8`
+* Minecraft Launcher >= `1.12.2`
+* Java 8 (aka `1.8`)
 
 The following steps assume the repository is already cloned and you are on a terminal with a working Python environment.
 
 ### Install Project Requirements
 
-- Install PyTorch from the steps outlined [here](https://pytorch.org/get-started/locally/).
-- Install project requirements from the specified file.
+* Install PyTorch following the steps outlined [here](https://pytorch.org/get-started/locally/).
+* Install project requirements from the specified file:
 
 ```bash
 pip install -r requirements.txt
